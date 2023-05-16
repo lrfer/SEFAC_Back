@@ -29,16 +29,23 @@ namespace SEFAC.Application.Services
             return result.Id;
         }
 
-        public async Task<AtividadeDto> GetAtividade(int id)
+        public async Task<ExecucaoAtividadeDto> GetAtividade(int id)
         {
-            return _mapper.Map<AtividadeDto>(await _atividadeRepository.GetById(id));
+            return _mapper.Map<ExecucaoAtividadeDto>(await _atividadeRepository.GetById(id));
         }
-        public async Task<AtividadeDto> AtualizarAtividade(AtualizarAtividadeDto atualizarAtivdadeDto)
+        public async Task<ExecucaoAtividadeDto> AtualizarAtividade(AtualizarAtividadeDto atualizarAtivdadeDto)
         {
             var atividade = _mapper.Map<ExecucoesAtividades>(atualizarAtivdadeDto);
             var result = await _atividadeRepository.Update(atividade);
 
-            return _mapper.Map<AtividadeDto>(result);
+            return _mapper.Map<ExecucaoAtividadeDto>(result);
+        }
+
+        public async Task<List<ExecucaoAtividadeDto>> GetAll()
+        {
+            var result = await _atividadeRepository.GetAllWithAluno();
+
+            return _mapper.Map<List<ExecucaoAtividadeDto>>(result);
         }
 
         #endregion

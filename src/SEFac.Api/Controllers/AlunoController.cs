@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SEFAC.Application.Dtos.Request;
 using SEFAC.Application.Dtos.Response;
 using SEFAC.Application.Services.Interfaces;
+using SEFAC.Domain.Const;
 
 namespace SEFac.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = Role.ADMIN)]
     public class AlunoController : ApiController
     {
         private readonly IAlunoService _service;

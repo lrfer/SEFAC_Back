@@ -26,7 +26,6 @@ namespace SEFac.Api.Config
                 });
             });
 
-            var t = configuration["AllowApplicationUrl"].Split(",");
 
             return services;
         }

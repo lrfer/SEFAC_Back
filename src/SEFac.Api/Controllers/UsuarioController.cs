@@ -26,9 +26,9 @@ namespace SEFac.Api.Controllers
                 
                 return Ok(await _service.Autenticar(login));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -41,9 +41,9 @@ namespace SEFac.Api.Controllers
             {
                 return Ok(await _service.CadastrarUsuario(login));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 

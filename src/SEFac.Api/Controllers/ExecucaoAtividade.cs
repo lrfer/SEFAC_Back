@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using SEFAC.Application.Dtos.Request;
 using SEFAC.Application.Dtos.Response;
 using SEFAC.Application.Services.Interfaces;
+using SEFAC.Domain.Const;
 
 namespace SEFac.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = Role.ADMIN)]
     public class ExecucaoAtividade : ApiController
     {
-
         private readonly IAtividadeService _service;
 
         public ExecucaoAtividade(IAtividadeService atividadeService)
@@ -35,11 +35,19 @@ namespace SEFac.Api.Controllers
 
         [HttpPost("atualizar")]
         [Produces("application/json")]
-        public async Task<ActionResult<AtividadeDto>> AtualizarAtividade([FromBody] AtualizarAtividadeDto atualizarAtividadeDto)
+        public async Task<ActionResult<ExecucaoAtividadeDto>> AtualizarAtividade([FromBody] AtualizarAtividadeDto atualizarAtividadeDto)
         {
             var serviceResponse = await _service.AtualizarAtividade(atualizarAtividadeDto);
 
             return Ok(serviceResponse);
         }
+
+        [HttpGet("")]
+        public async Task<IActionResult> GetAll()
+        {
+            var serviceResponse = await _service.GetAll();
+            return new ObjectResult(serviceResponse);
+        }
+
     }
 }

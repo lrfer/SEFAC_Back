@@ -6,8 +6,10 @@ namespace SEFAC.Application.Services.Interfaces
     public interface IAtividadeService
     {
         Task<int> CadastrarAtividade(CadastrarAtividadeDto cadastrarAtividadeDto);
-        Task<AtividadeDto> GetAtividade(int id);
+        Task<ExecucaoAtividadeDto> GetAtividade(int id);
 
-        Task<AtividadeDto> AtualizarAtividade(AtualizarAtividadeDto atualizarAtivdadeDto);
+        Task<ExecucaoAtividadeDto> AtualizarAtividade(AtualizarAtividadeDto atualizarAtivdadeDto);
+
+        Task<List<ExecucaoAtividadeDto>> GetAll();
     }
 }

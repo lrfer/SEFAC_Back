@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEFAC.Infrastructure.Persistence;
@@ -12,17 +11,16 @@ using SEFAC.Infrastructure.Persistence;
 namespace SEFAC.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230103230732_First")]
-    partial class First
+    [Migration("20230516160651_FixType")]
+    partial class FixType
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("SEFAC.Domain.Entities.Aluno", b =>
                 {
@@ -30,26 +28,24 @@ namespace SEFAC.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<string>("CodigoCurso")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("longtext")
                         .HasColumnName("Cod_Curso");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("longtext")
                         .HasColumnName("Nome");
 
-                    b.Property<string>("NumeroMatriula")
+                    b.Property<string>("NumeroMatricula")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("Nr_Matricula");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NumeroMatriula")
+                    b.HasIndex("NumeroMatricula")
                         .IsUnique();
 
                     b.ToTable("Aluno", (string)null);
@@ -61,22 +57,20 @@ namespace SEFAC.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CargaHoraria")
-                        .HasColumnType("datetime2")
+                    b.Property<decimal>("CargaHoraria")
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("Carga_Horaria");
 
                     b.Property<DateTime>("DataFim")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("Dt_Fim");
 
                     b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("Dt_Inicio");
 
-                    b.Property<DateTime>("Duracao")
-                        .HasColumnType("datetime2")
+                    b.Property<decimal>("Duracao")
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("Duracao");
 
                     b.Property<int>("IdAluno")
@@ -84,7 +78,7 @@ namespace SEFAC.Infrastructure.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -99,21 +93,19 @@ namespace SEFAC.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("Email");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("longtext")
                         .HasColumnName("Nome");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("longtext")
                         .HasColumnName("Senha");
 
                     b.HasKey("Id");

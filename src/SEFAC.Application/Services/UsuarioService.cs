@@ -71,6 +71,8 @@ namespace SEFAC.Application.Services
 
             var token = new JwtSecurityToken(
                 claims: claims,
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: credenciais);
 

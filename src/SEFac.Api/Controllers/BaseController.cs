@@ -6,7 +6,7 @@ namespace SEFac.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [EnableCors(Policy.SEFAC)]
+    [EnableCors(Policy.AllowAll)]
     public class ApiController : ControllerBase
     {
     }

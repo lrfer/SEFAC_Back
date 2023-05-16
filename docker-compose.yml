@@ -11,3 +11,14 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "Pwd@1234!"
+
+  postgree:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: Pwd@1234!
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

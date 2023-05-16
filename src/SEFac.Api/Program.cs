@@ -4,6 +4,9 @@ using SEFAC.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCorsConfiguration(builder.Configuration);
+
 builder.Services.AddControllers();
 
 
@@ -13,7 +16,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddJwtConfiguration(builder.Configuration);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.ConfigureSwagger();
-builder.Services.AddCorsConfiguration(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -21,11 +23,10 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHealthChecks("/health");
 
