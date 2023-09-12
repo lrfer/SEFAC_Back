@@ -14,8 +14,12 @@ services:
 
   postgree:
     image: postgres
+    user: postgres
     environment:
-      POSTGRES_PASSWORD: Pwd@1234!
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "Pwd@1234!"
+    ports:
+      - "5432:5432"
 
   adminer:
     image: adminer

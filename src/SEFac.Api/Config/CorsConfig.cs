@@ -20,9 +20,11 @@ namespace SEFac.Api.Config
 
                 options.AddPolicy(Policy.SEFAC, p =>
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     p.WithOrigins(configuration["AllowApplicationUrl"].Split(","))
                         .AllowAnyHeader()
                         .AllowAnyMethod();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 });
             });
 

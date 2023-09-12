@@ -65,7 +65,9 @@ namespace SEFAC.Application.Services
         {
             var claims = GetTokenClaims(usuario.Email, usuario.Nome, true, true);
 
+#pragma warning disable CS8604 // Possible null reference argument.
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:Secret").Value));
+#pragma warning restore CS8604 // Possible null reference argument.
 
             var credenciais = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 

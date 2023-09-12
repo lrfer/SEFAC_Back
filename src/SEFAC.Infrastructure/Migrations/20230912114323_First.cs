@@ -1,64 +1,59 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace SEFAC.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Primeira : Migration
+    public partial class First : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySQL:Charset", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "Aluno",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nr_Matricula = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Nome = table.Column<string>(type: "longtext", nullable: false),
-                    Cod_Curso = table.Column<string>(type: "longtext", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nr_Matricula = table.Column<string>(type: "text", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: false),
+                    Cod_Curso = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Aluno", x => x.Id);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Senha = table.Column<string>(type: "longtext", nullable: false),
-                    Nome = table.Column<string>(type: "longtext", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Senha = table.Column<string>(type: "text", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.Id);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Atividade",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "longtext", nullable: false),
-                    Dt_Inicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Dt_Fim = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Carga_Horaria = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Duracao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IdAluno = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nome = table.Column<string>(type: "text", nullable: false),
+                    Dt_Inicio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Dt_Fim = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Carga_Horaria = table.Column<decimal>(type: "numeric", nullable: false),
+                    Duracao = table.Column<decimal>(type: "numeric", nullable: false),
+                    IdAluno = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,8 +63,7 @@ namespace SEFAC.Infrastructure.Migrations
                         column: x => x.IdAluno,
                         principalTable: "Aluno",
                         principalColumn: "Id");
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Aluno_Nr_Matricula",

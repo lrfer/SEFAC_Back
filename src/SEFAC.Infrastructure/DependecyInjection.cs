@@ -13,7 +13,7 @@ namespace SEFAC.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySQL(
+                options.UseNpgsql(
                     configuration.GetConnectionString("DefaultConnection") ?? string.Empty,
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
