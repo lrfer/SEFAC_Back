@@ -9,45 +9,32 @@ namespace SEFAC.Application.Services
 {
     public class AtividadeService : IAtividadeService
     {
-        private readonly IExecucaoAtividadeRepository _atividadeRepository;
+        private readonly IAtividadeRepository _atividadeRepository;
         private readonly IMapper _mapper;
 
-        #region Ctor
-        public AtividadeService(IExecucaoAtividadeRepository atividadeRepository, IMapper mapper)
+        public AtividadeService(IAtividadeRepository atividadeRepository, IMapper mapper)
         {
             _atividadeRepository = atividadeRepository;
             _mapper = mapper;
         }
-        #endregion
 
-        #region Public Methods
-        public async Task<int> CadastrarAtividade(CadastrarAtividadeDto cadastrarAtividadeDto)
+        public async Task<Atividade> CadastrarAtividade(CadastrarAtividadeDto cadastrarAtividadeDto)
         {
-            var atividade = _mapper.Map<ExecucoesAtividades>(cadastrarAtividadeDto);
-            var result = await _atividadeRepository.Insert(atividade);
+            var atividade = _mapper.Map<Atividade>(cadastrarAtividadeDto); 
+            var insert = await _atividadeRepository.Insert(atividade);
 
-            return result.Id;
+            return insert;
+
         }
 
-        public async Task<ExecucaoAtividadeDto> GetAtividade(int id)
+        public async Task<AtividadeDto> GetAtividade(int id)
         {
-            return _mapper.Map<ExecucaoAtividadeDto>(await _atividadeRepository.GetById(id));
-        }
-        public async Task<ExecucaoAtividadeDto> AtualizarAtividade(AtualizarAtividadeDto atualizarAtivdadeDto)
-        {
-            var atividade = _mapper.Map<ExecucoesAtividades>(atualizarAtivdadeDto);
-            var result = await _atividadeRepository.Update(atividade);
-
-            return _mapper.Map<ExecucaoAtividadeDto>(result);
+            return _mapper.Map<AtividadeDto>(await _atividadeRepository.GetById(id));
         }
 
-        public async Task<List<ExecucaoAtividadeDto>> GetAll()
+        public async Task<IEnumerable<AtividadeDto>> GetAtividades()
         {
-            var result = await _atividadeRepository.GetAllWithAluno();
-
-            return _mapper.Map<List<ExecucaoAtividadeDto>>(result);
+            return _mapper.Map<IEnumerable<AtividadeDto>>(await _atividadeRepository.GetAll());
         }
-
-        #endregion
     }
 }

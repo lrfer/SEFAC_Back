@@ -1,15 +1,15 @@
 ﻿using SEFAC.Application.Dtos.Request;
 using SEFAC.Application.Dtos.Response;
+using SEFAC.Domain.Entities;
 
 namespace SEFAC.Application.Services.Interfaces
 {
     public interface IAtividadeService
     {
-        Task<int> CadastrarAtividade(CadastrarAtividadeDto cadastrarAtividadeDto);
-        Task<ExecucaoAtividadeDto> GetAtividade(int id);
+        Task<AtividadeDto> GetAtividade(int id);
 
-        Task<ExecucaoAtividadeDto> AtualizarAtividade(AtualizarAtividadeDto atualizarAtivdadeDto);
+        Task<Atividade> CadastrarAtividade(CadastrarAtividadeDto cadastrarAtividadeDto);
 
-        Task<List<ExecucaoAtividadeDto>> GetAll();
+        Task<IEnumerable<AtividadeDto>> GetAtividades();
     }
 }

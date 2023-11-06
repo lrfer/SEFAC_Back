@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SEFAC.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using SEFAC.Infrastructure.Persistence;
 namespace SEFAC.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231016211039_correcao")]
+    partial class correcao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,6 +91,9 @@ namespace SEFAC.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AlunoId")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("CargaHoraria")
                         .HasColumnType("numeric")
                         .HasColumnName("Carga_Horaria");
@@ -104,9 +110,6 @@ namespace SEFAC.Infrastructure.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("Duracao");
 
-                    b.Property<int>("IdAluno")
-                        .HasColumnType("integer");
-
                     b.Property<int>("IdAtividade")
                         .HasColumnType("integer");
 
@@ -116,7 +119,7 @@ namespace SEFAC.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdAluno");
+                    b.HasIndex("AlunoId");
 
                     b.HasIndex("IdAtividade");
 
@@ -158,8 +161,8 @@ namespace SEFAC.Infrastructure.Migrations
                 {
                     b.HasOne("SEFAC.Domain.Entities.Aluno", "Aluno")
                         .WithMany("ExecucaoAtividades")
-                        .HasForeignKey("IdAluno")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasForeignKey("AlunoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SEFAC.Domain.Entities.Atividade", "Atividade")

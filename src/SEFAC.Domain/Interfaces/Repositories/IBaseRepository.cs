@@ -7,7 +7,7 @@ namespace SEFAC.Domain.Interfaces.Repositories
         where TEntity : BaseEntity
     {
         Task<TEntity> GetById(int id);
-        Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>>? filtro = null);
+        Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? filtro = null);
         Task<TEntity> Insert(TEntity entity);
         Task<TEntity> Update(TEntity entity);
         Task Delete(int id);

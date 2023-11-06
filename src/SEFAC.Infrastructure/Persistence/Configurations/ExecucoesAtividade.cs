@@ -7,7 +7,7 @@ namespace SEFAC.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.ExecucoesAtividades> builder)
         {
-            builder.ToTable("Atividade").HasKey(x => x.Id);
+            builder.ToTable("ExecucaoAtividade").HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
@@ -33,11 +33,12 @@ namespace SEFAC.Infrastructure.Persistence.Configurations
                 .HasColumnName("Duracao")
                 .IsRequired();
 
+            builder.HasOne(x => x.Atividade)
+                    .WithMany(x => x.Execucoes);
 
             builder.HasOne(x => x.Aluno)
-                    .WithMany(x => x.ExecucoesAtividades)
-                    .HasForeignKey(x => x.IdAluno)
-                    .OnDelete(DeleteBehavior.NoAction);
+                .WithMany(x => x.ExecucaoAtividades);
+
         }
     }
 }

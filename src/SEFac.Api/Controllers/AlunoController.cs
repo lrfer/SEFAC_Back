@@ -9,7 +9,6 @@ namespace SEFac.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = Role.ADMIN)]
     public class AlunoController : ApiController
     {
         private readonly IAlunoService _service;
@@ -50,6 +49,20 @@ namespace SEFac.Api.Controllers
         {
             var serviceResponse = await _service.GetAll();
             return new ObjectResult(serviceResponse);
+        }
+
+        [HttpGet("relatorio/{idAluno}")]
+        public async Task<IActionResult> GerarRelatorio(int idAluno)
+        {
+            var relatorio = await _service.GerarRelatorio(idAluno);
+            return Ok(relatorio);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _service.Delete(id);
+            return Ok();
         }
     }
 }

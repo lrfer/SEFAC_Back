@@ -8,10 +8,12 @@
         public DateTime DataFim { get; set; }
         public decimal CargaHoraria { get; set; }
         public decimal Duracao { get; set; }
+        public int IdAtividade { get; set; }
         public int IdAluno { get; set; }
         #endregion
         #region "Virtual Properties"
         public virtual Aluno Aluno { get; set; }
+        public virtual Atividade Atividade { get; set; }
         #endregion
     }
 }

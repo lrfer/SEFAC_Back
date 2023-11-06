@@ -34,7 +34,7 @@ namespace SEFac.Api.Controllers
 
 
         [AllowAnonymous]
-        [HttpPost("cadastar")]
+        [HttpPost("cadastrar")]
         public async Task<ActionResult<string>> CadastrarUsuario([FromBody] UsuarioDto login)
         {
             try

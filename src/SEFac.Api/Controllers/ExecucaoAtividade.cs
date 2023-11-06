@@ -12,9 +12,9 @@ namespace SEFac.Api.Controllers
     [Authorize(Roles = Role.ADMIN)]
     public class ExecucaoAtividade : ApiController
     {
-        private readonly IAtividadeService _service;
+        private readonly IExecucaoAtividadeService _service;
 
-        public ExecucaoAtividade(IAtividadeService atividadeService)
+        public ExecucaoAtividade(IExecucaoAtividadeService atividadeService)
         {
             _service = atividadeService;
         }
@@ -26,7 +26,7 @@ namespace SEFac.Api.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        public async Task<ActionResult<int>> CadastrarAtividade([FromBody] CadastrarAtividadeDto cadastrarAtividadeDto)
+        public async Task<ActionResult<int>> CadastrarAtividade([FromBody] CadastrarExecucaoAtividadeDto cadastrarAtividadeDto)
         {
             var result = await _service.CadastrarAtividade(cadastrarAtividadeDto);
 

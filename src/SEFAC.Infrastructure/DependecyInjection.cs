@@ -23,6 +23,7 @@ namespace SEFAC.Infrastructure
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IExecucaoAtividadeRepository, ExecucaoAtividadeRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IAtividadeRepository, AtividadeRepository>();    
 
             return services;
         }

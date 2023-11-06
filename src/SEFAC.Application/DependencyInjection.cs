@@ -12,9 +12,10 @@ namespace SEFAC.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
-            services.AddScoped<IAtividadeService, AtividadeService>();
+            services.AddScoped<IExecucaoAtividadeService, ExecucaoAtividadeService>();
             services.AddScoped<IAlunoService, AlunoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAtividadeService, AtividadeService>();
 
             return services;
         }

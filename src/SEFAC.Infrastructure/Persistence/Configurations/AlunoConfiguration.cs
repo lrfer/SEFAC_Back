@@ -26,10 +26,10 @@ namespace SEFAC.Infrastructure.Persistence.Configurations
                 .HasColumnName("Nr_Matricula")
                 .IsRequired();
 
-            builder.HasMany(x => x.ExecucoesAtividades)
+            builder.HasMany(x => x.ExecucaoAtividades)
                     .WithOne(x => x.Aluno)
                     .HasForeignKey(x => x.IdAluno)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

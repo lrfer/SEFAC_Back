@@ -4,6 +4,10 @@ using SEFAC.Application.Dtos.Response;
 using SEFAC.Application.Services.Interfaces;
 using SEFAC.Domain.Entities;
 using SEFAC.Domain.Interfaces.Repositories;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.IO.Source;
 
 namespace SEFAC.Application.Services
 {
@@ -49,6 +53,100 @@ namespace SEFAC.Application.Services
 
             return _mapper.Map<List<AlunoDto>>(result);
         }
+
+        public async Task<byte[]> GerarRelatorio(int idAluno)
+        {
+            var aluno = await _alunoRepository.GetAlunoWithInclude(idAluno);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Document document = new Document(new PdfDocument(new PdfWriter(ms)));
+
+                PopularDocumento(aluno, document);
+
+                document.Close();
+
+                byte[] result = ms.ToArray();
+
+                return result;
+
+            }
+
+        }
+
+        private static void PopularDocumento(Aluno aluno, Document document)
+        {
+            document.Add(new Paragraph(aluno.Nome)
+                .SetFontSize(16)
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .SetMarginBottom(20)
+                );
+
+            var execAtividadeOrder = aluno.ExecucaoAtividades.OrderBy(x => x.Atividade.Id);
+
+
+            foreach (var exec in execAtividadeOrder)
+            {
+                var idAtividade = exec.Atividade.Id;
+                int idAntigo = -99;
+                if(idAtividade != idAntigo)
+                { 
+                    document.Add(new Paragraph("Atividade :  " + exec.Atividade.CodigoSiex)
+                            .SetFontSize(14)
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                            .SetMarginBottom(20));
+                    idAntigo = idAtividade;                         
+                }
+
+
+
+                document.Add(new Paragraph(exec.Nome)
+                   .SetFontSize(14)
+                   .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                   .SetMarginBottom(20));
+
+                document.Add(new Paragraph("Duração : " + exec.Duracao.ToString())
+                   .SetFontSize(14)
+                   .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                   .SetMarginBottom(20));
+
+                document.Add(new Paragraph("Data Inicio : " + exec.DataInicio.ToString())
+                      .SetFontSize(14)
+                      .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                      .SetMarginBottom(20));
+
+                document.Add(new Paragraph("Data Fim : " + exec.DataFim.ToString())
+                      .SetFontSize(14)
+                      .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                      .SetMarginBottom(20));
+
+                document.Add(new Paragraph("CargaHoraria : " + exec.CargaHoraria.ToString())
+                      .SetFontSize(14)
+                      .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                      .SetMarginBottom(20));
+
+
+                document.Add(new Paragraph("________________________________________")
+                      .SetFontSize(14)
+                      .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                      .SetMarginBottom(20));
+            }
+
+
+            document.Add(new Paragraph("Carga Horaria total : " + aluno.ExecucaoAtividades.Sum(x=>x.CargaHoraria))
+                  .SetFontSize(14)
+                  .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                  .SetMarginBottom(20));
+
+        }
+
+        public async Task Delete(int idAluno)
+        {
+            await _alunoRepository.Delete(idAluno);
+        }
+
         #endregion
     }
 

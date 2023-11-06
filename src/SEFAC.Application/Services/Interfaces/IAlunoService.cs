@@ -10,5 +10,8 @@ namespace SEFAC.Application.Services.Interfaces
 
         Task<AlunoDto> AtualizarAluno(AtualizarAlunoDto atualizarAlunoDto);
         Task<List<AlunoDto>> GetAll();
+
+        Task<byte[]> GerarRelatorio(int idAluno);
+        Task Delete(int idAluno);
     }
 }

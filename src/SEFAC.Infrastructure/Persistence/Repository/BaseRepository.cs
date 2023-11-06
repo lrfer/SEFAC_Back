@@ -44,7 +44,7 @@ namespace SEFAC.Infrastructure.Persistence.Repository
 
         public async Task<TEntity> GetById(int id) => await _repository.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>>? filtro = null)
+        public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? filtro = null)
         {
             if (filtro is null)
                 return await _repository.AsQueryable().ToListAsync();
